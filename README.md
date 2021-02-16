@@ -1,5 +1,5 @@
 # DataSoap
-**Author**: Jae Choi, Mason Fryberger, Alex Angelico, Grace Choi, Robert Carter
+**Author**: Jae Choi, Mason Fryberger, Alex Angelico, Grace Choi, Robert Carter  
 **Version**: 1.0.0 
 ## MVP
 CLI menu that allows users to request overall daily rating for group of websites, with other options for individual site readouts.
