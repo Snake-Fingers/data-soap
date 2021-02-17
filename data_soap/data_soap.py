@@ -2,8 +2,14 @@ import pandas as pd
 import numpy as np 
 import re   
 
-def soap(data):
+def sample_dataframe():
+    df = pd.read_csv('assets/googleplaystore.csv')
+    # df = pd.DataFrame(df.copy().drop(['Category', 'Reviews', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1)).iloc[200: 240]
+    df = pd.DataFrame(df.copy().drop(['Category', 'Reviews', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1))
+    # print(df.info())
+    return df
 
+def soap(data):
     """Pulls trailing and leading character
     """
     # create copy of the dataframe to be cleaned
@@ -14,7 +20,7 @@ def soap(data):
         # columns replacing the values with the return of those funcitons
             # Takes form: ` df['column to be formatted'].replace(df[column to be formatted].values, [pd.to_numeric(callback_1(callback_2(val))) for val in df['collumn to be formatted']], inplace=True)` 
     # return a copy of input of the values properly converted
-    # pass
+    pass
 
 def show_diff():
     """Shows both the original and cleaned dataframes.
@@ -28,23 +34,22 @@ def show_diff():
     # show the `.describe` for the original and the cleaned copy
     # accomplised by returning an iterable of print statements for each.
     # e.g. return [(print(f'{origin_info}'), print(f'{cleaned_info}')), (print(f'{origin_describe}'), print(f'{cleaned_describe}'))]
-    # pass 
+    pass 
 
 # define methods for pulling commas out of a String
 def pull_comma(line: str)-> str:
-  """For use on integer||float values represented by strings containing "," characters.
-     Does not alter the notation or denomination of the value. ie: "1,000" will not become
-     "1k" 
-     input <-- str
-     output --> str
-  """
-  if ',' in line:
-    line = line.split(',')
-    line = ''.join(line)
-    return line
-  else:
-    return line
-            
+    """For use on integer||float values represented by strings containing "," characters.
+        Does not alter the notation or denomination of the value. ie: "1,000" will not become
+        "1k" 
+        input <-- str
+        output --> str
+    """
+    if ',' in line:
+        line = line.split(',')
+        line = ''.join(line)
+        return line
+    else:
+        return line
 
 # define methods for pulling leading characters
 def pull_trailing_character(line):
@@ -55,24 +60,27 @@ def pull_trailing_character(line):
 
      input<-- str
      output--> str
-  """
-  if not line.isnumeric():
-    return line[:-1] if line[0].isnumeric() else 'Nan'
-  else:
-    return line
-
+  	"""
+    if not line.isnumeric():
+        return line[:-1] if line[0].isnumeric() else 'Nan'
+    else:
+        return line
+	# pass
     # current solution assumes that leading chars will always be in the form: `$xx.xx` with no additional whitespaces or chars between 
     # the char in question and the numeric string chars we actually want. mvp: keep assumption, note it in Docs. stretch: account for other possibilities
     # current solution takes form ` if type(str[0]) != int: return str[1:]`
     
-
-
 # define methods for pulling trailing characters
-def pull_leading_character():
-     """For use on numeric strings that begin with a currency or denom char.
+def pull_leading_character(cvs_str):
+	"""For use on numeric strings that begin with a currency or denom char.
+	"""
+	# if cvs_str[1].isnumeric():
+	# 	return cvs_str[1:]
+	# else:
+	# 	return 0
 
-  """
-  return cvs_str[1:] if cvs_str[1].isnumeric() else 0
+	return cvs_str[1:] if cvs_str[1].isnumeric() else 0
+	# pass
     # current solution assumes trailing char only == 'm || M' or 'k || K' and converts 'k || K' to a decimal of 1Million. 
     # mvp: keep assumption and note it in Docs. stretch: account for all unit conversion types.
     # current solution takes form ` if str[-1] == 'k': convert to str[:-1]//100^10 else return str[:-1]`
@@ -86,4 +94,5 @@ def convert_all():
 
 
 
-
+if __name__ == "__main__":
+	pass
