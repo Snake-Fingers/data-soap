@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: data-soap
-Version: 0.0.3
+Version: 0.0.5
 Summary: A CLI menu that allows users to request overall daily rating for group of websites, with other options for individual site readouts.
 Home-page: https://github.com/Snake-Fingers/data-soap
 Author: Mason Fryberger / Grace Choi / Alex Angelico / Jae Young Choi / Robert Carter

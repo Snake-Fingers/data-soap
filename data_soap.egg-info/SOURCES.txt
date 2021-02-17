@@ -7,6 +7,7 @@ data_soap/data_soap.py
 data_soap.egg-info/PKG-INFO
 data_soap.egg-info/SOURCES.txt
 data_soap.egg-info/dependency_links.txt
+data_soap.egg-info/requires.txt
 data_soap.egg-info/top_level.txt
 tests/__init__.py
 tests/test_data_soap.py
