@@ -31,7 +31,7 @@ def test_pull_comma_when_lead_char():
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_no_comma():
-    actual = pull_comma('1000000')
+    actual = pull_comma('$1000000')
     expected = '$1000000'
     assert actual == expected
 
@@ -39,7 +39,7 @@ def test_pull_comma_when_no_comma():
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_NaN():
     actual = pull_comma('this, is NaN')
-    expected = 'this, is Nan'
+    expected = 'this is NaN'
     assert actual == expected
 
 
@@ -47,12 +47,11 @@ def test_pull_comma_when_NaN():
 def test_pull_leading_character():
     df = sample_dataframe
     actual = pull_leading_character('$4.99')
-    expected = 4.99
+    expected = '4.99'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
 def test_pull_trailing_character_m():
-    df = sample_dataframe
     actual = pull_trailing_character('1000000m')
     expected = 1
     assert actual == expected

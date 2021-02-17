@@ -72,11 +72,11 @@ def pull_trailing_character(line):
 
 
 # define methods for pulling trailing characters
-def pull_leading_character():
+def pull_leading_character(line):
     """For use on numeric strings that begin with a currency or denom char.
 
     """
-    return cvs_str[1:] if cvs_str[1].isnumeric() else 0
+    return line[1:] if line[1].isnumeric() else 0
     # current solution assumes trailing char only == 'm || M' or 'k || K' and converts 'k || K' to a decimal of 1Million. 
     # mvp: keep assumption and note it in Docs. stretch: account for all unit conversion types.
     # current solution takes form ` if str[-1] == 'k': convert to str[:-1]//100^10 else return str[:-1]`
