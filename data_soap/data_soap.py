@@ -16,15 +16,12 @@ def show_diff():
     # pass 
 
 def pull_comma(line: str)-> str:
-    line = line.split()
-    for char in line:
-        if char == ',':
-            line.pop(',')
-         
-        else:
-            continue 
 
-    return ''.join(line) 
+   if ',' in line:
+        line.split(',')
+        ''.join(line) 
+         
+   return line
             
 
       # pass
