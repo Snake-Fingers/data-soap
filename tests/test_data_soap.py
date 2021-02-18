@@ -9,7 +9,7 @@ def test_version():
 @pytest.fixture
 def sample_dataframe():
     df = pd.read_csv('assets/googleplaystore.csv')
-    df = pd.DataFrame(df.copy().drop(['Category', 'Reviews', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1)).iloc[200: 240]
+    df = pd.DataFrame(df.copy().drop(['Category', 'Reviews', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1)).iloc[200:240]
     # print(df.info())
     return df
     
@@ -73,8 +73,8 @@ def test_convert_all(sample_dataframe):
 
 # @pytest.mark.skip('pending code')
 def test_soap_one_column_clean(sample_dataframe):
-    rinsed = soap(sample_dataframe, ['Installs'])
-    actual = rinsed['Installs'][211]
+    rinsed = soap(sample_dataframe, ['Size'])
+    actual = rinsed['Size'].iloc[9]
     expected = .023
     assert actual == expected
 

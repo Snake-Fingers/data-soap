@@ -11,7 +11,7 @@ def soap(data, dirty:list):
     # create copy of the dataframe to be cleaned
     clean_data = data.copy()
     for col in dirty:
-        clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(pull_trailing_character(pull_leading_character(pull_comma(val))), errors='coerce') for val in clean_data[f'{col}']], inplace=True)
+        clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pull_trailing_character(pull_leading_character(pull_comma(val))) for val in clean_data[f'{col}']], inplace=True)
     # run pd.DataFrame.replace for all indicated columns on the copy of the df input.
         # applies all formatter functions defined below to the 
         # columns replacing the values with the return of those funcitons
@@ -60,14 +60,19 @@ def pull_trailing_character(line):
      input<-- str
      output--> str
     """
+    # print(line[0:len(line)-1])
     if line[-1].lower() == 'k':
         return (pd.to_numeric(line[0:len(line)-1])*1000) / 1000000
     elif line[-1].lower() == 'm':
         return (pd.to_numeric(line[0:len(line)-1])*1000000) / 1000000
-    else:
+    elif not line[-1].isalpha:
         return pd.to_numeric(line[0:len(line)-1]) or 'NaN'
+    else:
+        return line
     
 
+        
+ 
     # current solution assumes that leading chars will always be in the form: `$xx.xx` with no additional whitespaces or chars between 
     # the char in question and the numeric string chars we actually want. mvp: keep assumption, note it in Docs. stretch: account for other possibilities
     # current solution takes form ` if type(str[0]) != int: return str[1:]`
