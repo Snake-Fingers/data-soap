@@ -9,7 +9,7 @@ def test_version():
 @pytest.fixture
 def sample_dataframe():
     df = pd.read_csv('assets/googleplaystore.csv')
-    df = pd.DataFrame(df.copy().drop(['Category', 'Reviews', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1)).iloc[200:240]
+    df = pd.DataFrame(df.copy().drop(['Category', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1)).iloc[200:240]
     # print(df.info())
     return df
     
@@ -45,7 +45,6 @@ def test_pull_comma_when_NaN():
 
 # @pytest.mark.skip('pending code')
 def test_pull_leading_character():
-    df = sample_dataframe
     actual = pull_leading_character('$4.99')
     expected = '4.99'
     assert actual == expected
@@ -79,20 +78,15 @@ def test_soap_one_column_clean(sample_dataframe):
     assert actual == expected
 
 
-@pytest.mark.skip('pending code')
-def test_soap_one_column_clean_trailing(sample_dataframe):
-    rinsed = soap(sample_dataframe, ['Reviews'])
-    actual = rinsed.iloc[200]['Reviews']
-    expected = 10000000
-    assert actual == expected
-
-
-@pytest.mark.skip('pending code')
+# @pytest.mark.skip('pending code')
 def test_soap_more_columns(sample_dataframe):
-    rinsed = soap(sample_dataframe, ['Reviews', 'Installs', 'Price'])
-    data_types = ['object', 'float64'*3]
-    actual = rinsed.dtypes.values
-    expected = data_types
+    rinsed = soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
+    # rinsed.convert_dtypes()
+    # print(f' \n rinsed.describe() in test_: {rinsed.info()}')
+    # data_types = [rinsed['Reviews'].dtypes, rinsed['Installs'].dtypes, rinsed['Price'].dtypes]
+    actual = rinsed.dtypes
+    print(actual)
+    expected = pd.Series(['object', 'int64', 'float64', 'float64', 'float64', '= <built-in function eq>'], ['App', 'Reviews', 'Installs', 'Price', 'dytpe:', 'op'])
     assert actual == expected
 
 
