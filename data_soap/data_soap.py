@@ -11,7 +11,7 @@ def soap(data, dirty:list):
     # create copy of the dataframe to be cleaned
     clean_data = data.copy()
     for col in dirty:
-        clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(pull_trailing_character(pull_leading_character(pull_comma(val)))) for val in clean_data[f'{col}']], inplace=True)
+        clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(pull_trailing_character(pull_leading_character(pull_comma(val))), errors='coerce') for val in clean_data[f'{col}']], inplace=True)
     # run pd.DataFrame.replace for all indicated columns on the copy of the df input.
         # applies all formatter functions defined below to the 
         # columns replacing the values with the return of those funcitons
@@ -60,10 +60,13 @@ def pull_trailing_character(line):
      input<-- str
      output--> str
     """
-    if not line.isnumeric():
-        return line[:-1] if line[0].isnumeric() else 'Nan'
+    if line[-1].lower() == 'k':
+        return (pd.to_numeric(line[0:len(line)-1])*1000) / 1000000
+    elif line[-1].lower() == 'm':
+        return (pd.to_numeric(line[0:len(line)-1])*1000000) / 1000000
     else:
-        return line
+        return pd.to_numeric(line[0:len(line)-1]) or 'NaN'
+    
 
     # current solution assumes that leading chars will always be in the form: `$xx.xx` with no additional whitespaces or chars between 
     # the char in question and the numeric string chars we actually want. mvp: keep assumption, note it in Docs. stretch: account for other possibilities
@@ -76,7 +79,7 @@ def pull_leading_character(line):
     """For use on numeric strings that begin with a currency or denom char.
 
     """
-    return line[1:] if line[1].isnumeric() else 0
+    return line[0:] if line[0].isdigit() else line[1:len(line)]
     # current solution assumes trailing char only == 'm || M' or 'k || K' and converts 'k || K' to a decimal of 1Million. 
     # mvp: keep assumption and note it in Docs. stretch: account for all unit conversion types.
     # current solution takes form ` if str[-1] == 'k': convert to str[:-1]//100^10 else return str[:-1]`

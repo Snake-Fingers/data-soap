@@ -52,18 +52,17 @@ def test_pull_leading_character():
 
 # @pytest.mark.skip('pending code')
 def test_pull_trailing_character_m():
-    actual = pull_trailing_character('1000000m')
-    expected = 1
+    actual = pull_trailing_character('1m')
+    expected = 1.0
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
 def test_pull_trailing_character_k():
-    df = sample_dataframe
-    actual = pull_trailing_character('1,000k')
+    actual = pull_trailing_character('1k')
     expected = .001
     assert actual == expected
 
-# @pytest.mark.skip('pending code')
+@pytest.mark.skip('pending code')
 # re-design needed convert takes any unit of measure and converts to common denomination of that measure e.g: x'k' to .x 'm' or x 'ml' to .x'lt' etc.
 def test_convert_all(sample_dataframe):
     df = sample_dataframe
@@ -73,9 +72,9 @@ def test_convert_all(sample_dataframe):
 
 
 # @pytest.mark.skip('pending code')
-def test_soap_one_column_clean_commas(sample_dataframe):
+def test_soap_one_column_clean(sample_dataframe):
     rinsed = soap(sample_dataframe, ['Installs'])
-    actual = rinsed.iloc[211]['Installs']
+    actual = rinsed['Installs'][211]
     expected = .023
     assert actual == expected
 
