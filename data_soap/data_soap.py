@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np 
-import re   
+import re  
+import units.py 
 def soap(data, dirty:list):
     """Pulls trailing and leading character
     """
@@ -80,17 +81,22 @@ def pull_leading_character(line):
 
 # identify highest denomination and convert all figures to fraction of that denomination
 
-unit_measure = {
-    'k': 1000,
-    'm': 1,
-}
-def convert_all():
-        
-    convert_from = unit_measure
-    value = unit_measure 
-    
 
-            
+
+def convert_unit(line, unit_target):
+
+
+
+
+   
+    
+  
+  
+
+        
+        
+
+        
 
    
 
