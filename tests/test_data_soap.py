@@ -1,8 +1,8 @@
 from data_soap import __version__
 import pytest
 import pandas as pd
-from data_soap.data_soap import soap, pull_comma, pull_leading_character, pull_trailing_character, convert_unit
-
+# from data_soap.data_soap import soap, pull_comma, pull_leading_character, pull_trailing_character, convert_unit
+from data_soap.data_soap import Soap
 
 def test_version():
     assert __version__ == '0.1.0'
@@ -22,52 +22,52 @@ def sample_dataframe():
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_trail_char():
-    actual = pull_comma('1,000,000+')
+    actual = Soap.pull_comma('1,000,000+')
     expected = '1000000+'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_lead_char():
-    actual = pull_comma('$1,000,000')
+    actual = Soap.pull_comma('$1,000,000')
     expected = '$1000000'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_no_comma():
-    actual = pull_comma('$1000000')
+    actual = Soap.pull_comma('$1000000')
     expected = '$1000000'
     assert actual == expected
 
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_NaN():
-    actual = pull_comma('this, is NaN')
+    actual = Soap.pull_comma('this, is NaN')
     expected = 'this is NaN'
     assert actual == expected
 
 
 # @pytest.mark.skip('pending code')
 def test_pull_leading_character():
-    actual = pull_leading_character('$4.99')
+    actual = Soap.pull_leading_character('$4.99')
     expected = '4.99'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
 def test_pull_trailing_character_m():
-    actual = pull_trailing_character('1m')
+    actual = Soap.pull_trailing_character('1m')
     expected = 1.0
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
 def test_pull_trailing_character_k():
-    actual = pull_trailing_character('1k')
+    actual = Soap.pull_trailing_character('1k')
     expected = .001
     assert actual == expected
 
 
 # @pytest.mark.skip('pending code')
 def test_soap_one_column_clean(sample_dataframe):
-    rinsed = soap(sample_dataframe, ['Size'])
+    rinsed = Soap(sample_dataframe, ['Size']).clean_copy
     actual = rinsed['Size'].iloc[9]
     expected = .023
     assert actual == expected
@@ -75,8 +75,8 @@ def test_soap_one_column_clean(sample_dataframe):
 
 # @pytest.mark.skip('pending code')
 def test_soap_more_columns(sample_dataframe):
-    rinsed = soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
-    actual = rinsed.dtypes.all()
+    rinsed = Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
+    actual = rinsed.clean_copy.dtypes.all()
     expected = 'float64'
     assert actual == expected
 
@@ -93,7 +93,7 @@ def test_soap_wrong_input_type():
 
 # @pytest.mark.skip('pending code')
 def test_convert_unit():
-    actual = convert_unit('10k', 'M')
+    actual = Soap.convert_unit('10k', 'M')
     expected = '0.01'
     assert actual == expected
 
