@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np 
 import re   
+from unit_data.conversion import units
 
 def soap(data, dirty:list):
 
@@ -92,7 +93,15 @@ def pull_leading_character(line):
 
 
 # identify highest denomination and convert all figures to fraction of that denomination
-def convert_all():
+def convert_unit(line, unit_target):
+    # step 1: identify the suffix line -1
+    for i in units.keys():
+        print(f'i in convert_unit{i} \n units.keys{units.keys()}')
+        if i in str(line):
+            line = int(float(line[0: line.index(i)]))*units[i] /units[unit_target]
+        else:
+            pass
+    return str(line)
     # no current logic written for this, previously was handled as part of  pull_trailing logic. 
     pass
 
