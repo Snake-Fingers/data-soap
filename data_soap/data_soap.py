@@ -51,18 +51,20 @@ def pull_trailing_character(line):
      of an alpha-char such as "23k" Does not perform conversion to parts of another denomination.
      ie: "23k" does not become ".023" if you wanted parts of milions. transformation is literal.
      thus "23k" becomes "23000" also works for strings denoting '%' if '%' denoted at end of string
+
      input<-- str
      output--> str
     """
-    if not line.isnumeric():
-        return line[:-1] if line[0].isnumeric() else 'Nan'
+    # print(line[0:len(line)-1])
     if line[-1].lower() == 'k':
-        return (pd.to_numeric(line[0:len(line)-1])*1000) / 1000000
+        return (int(float(line[0:len(line)-1])*1000) / 1000000)
     elif line[-1].lower() == 'm':
-        return (pd.to_numeric(line[0:len(line)-1])*1000000) / 1000000
+        return (int(float(line[0:len(line)-1])*1000000) / 1000000)
+    elif line[-1].isalpha == False:
+        return (line[0:len(line)-1]) or 'NaN'
     else:
         return line
-        return pd.to_numeric(line[0:len(line)-1]) or 'NaN'
+    
 
 
     # current solution assumes that leading chars will always be in the form: `$xx.xx` with no additional whitespaces or chars between 
@@ -95,11 +97,6 @@ def convert_unit(line, unit_target):
 
 
 
-    
-                # check if end blind characters are in inblind dictionary
-                # if there are, multiply by the value of that suffix
-                # and divide by the unit_target
-                # if not, pull all non-digit character and return remaining digit value
     # step 2: 
 
 

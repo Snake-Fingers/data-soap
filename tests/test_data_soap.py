@@ -1,5 +1,5 @@
 from data_soap import __version__
-import pytest 
+import pytest
 import pandas as pd
 from data_soap.data_soap import soap, pull_comma, pull_leading_character, pull_trailing_character, convert_unit
 def test_version():
@@ -11,7 +11,7 @@ def sample_dataframe():
     df = pd.read_csv('assets/googleplaystore.csv')
     df = pd.DataFrame(df.copy().drop(['Category', 'Rating', 'Type', 'Content Rating', 'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis = 1)).iloc[200:240]
     return df
-    
+
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_trail_char():
@@ -20,12 +20,16 @@ def test_pull_comma_when_trail_char():
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_comma_when_lead_char():
     actual = pull_comma('$1,000,000')
     expected = '$1000000'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_comma_when_no_comma():
     actual = pull_comma('$1000000')
     expected = '$1000000'
@@ -46,12 +50,16 @@ def test_pull_leading_character():
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_trailing_character_m():
     actual = pull_trailing_character('1m')
     expected = 1.0
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_trailing_character_k():
     actual = pull_trailing_character('1k')
     expected = .001
@@ -77,12 +85,8 @@ def test_soap_one_column_clean(sample_dataframe):
 # @pytest.mark.skip('pending code')
 def test_soap_more_columns(sample_dataframe):
     rinsed = soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
-    # rinsed.convert_dtypes()
-    # print(f' \n rinsed.describe() in test_: {rinsed.info()}')
-    # data_types = [rinsed['Reviews'].dtypes, rinsed['Installs'].dtypes, rinsed['Price'].dtypes]
-    actual = rinsed.dtypes
-    print(actual)
-    expected = pd.Series(['object', 'int64', 'float64', 'float64', 'float64', '= <built-in function eq>'], ['App', 'Reviews', 'Installs', 'Price', 'dytpe:', 'op'])
+    actual = rinsed.dtypes.all()
+    expected = 'float64'
     assert actual == expected
 
 
