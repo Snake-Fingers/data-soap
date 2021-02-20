@@ -1,7 +1,7 @@
 import pandas as pd 
 import numpy as np 
 import re  
-from .units import units
+from unit_data.conversion import units
 def soap(data, dirty:list):
     """Pulls trailing and leading character
     """
@@ -86,11 +86,12 @@ def pull_leading_character(line):
 def convert_unit(line, unit_target):
     # step 1: identify the suffix line -1
     for i in units.keys():
-        if i in line:
+        print(f'i in convert_unit{i} \n units.keys{units.keys()}')
+        if i in str(line):
             line = int(float(line[0: line.index(i)]))*units[i] /units[unit_target]
         else:
             pass
-    return line
+    return str(line)
 
 
 
