@@ -8,6 +8,8 @@ authors = ["Grace Choi <choi.g.330@gmail.com>"]
 python = "^3.9"
 pandas = "^1.2.2"
 pytest = "^6.2.2"
+pytest-watch = "^4.2.0"
+coverage = "^5.4"
 
 [tool.poetry.dev-dependencies]
 
