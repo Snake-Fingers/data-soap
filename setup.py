@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="data-soap",
-    version="0.5.0",
+    name="datasoap",
+    version="0.5.1",
     author="Mason Fryberger / Grace Choi / Alex Angelico / Jae Young Choi / Robert Carter",
     author_email="alex.angelico@gmail.com",
     description="A CLI menu that allows users to request overall daily rating for group of websites, with other options for individual site readouts.",

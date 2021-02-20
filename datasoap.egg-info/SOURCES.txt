@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+data_soap/__init__.py
+data_soap/data_soap.py
+datasoap.egg-info/PKG-INFO
+datasoap.egg-info/SOURCES.txt
+datasoap.egg-info/dependency_links.txt
+datasoap.egg-info/requires.txt
+datasoap.egg-info/top_level.txt
+tests/__init__.py
+tests/test_data_soap.py
