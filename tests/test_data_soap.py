@@ -1,7 +1,7 @@
 from data_soap import __version__
 import pytest
 import pandas as pd
-from data_soap.data_soap import soap, pull_comma, pull_leading_character, pull_trailing_character, convert_all
+from data_soap.data_soap import soap, pull_comma, pull_leading_character, pull_trailing_character, convert_unit
 
 
 def test_version():
@@ -109,3 +109,7 @@ def test_soap_wrong_input_type():
 
 
 # @pytest.mark.skip('pending code')
+def test_convert_unit():
+    actual = convert_unit('10k', 'M')
+    expected = '0.01'
+    assert actual == expected
