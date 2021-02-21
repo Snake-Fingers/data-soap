@@ -94,14 +94,6 @@ class Soap:
             return line if line[-1].isdigit() else (line[0:len(line)-1]) 
         else:
             return line
-        
-
-            
-    
-        # current solution assumes that leading chars will always be in the form: `$xx.xx` with no additional whitespaces or chars between 
-        # the char in question and the numeric string chars we actually want. mvp: keep assumption, note it in Docs. stretch: account for other possibilities
-        # current solution takes form ` if type(str[0]) != int: return str[1:]`
-        
 
 
     # define methods for pulling trailing characters

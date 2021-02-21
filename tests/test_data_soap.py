@@ -16,9 +16,6 @@ def sample_dataframe():
     # print(df.info())
     return df
 
-# def test_sample_test(sample_dataframe):
-#     df = sample_dataframe()
-#     print(df.info)
 
 # @pytest.mark.skip('pending code')
 def test_pull_comma_when_trail_char():
@@ -81,13 +78,13 @@ def test_soap_more_columns(sample_dataframe):
     assert actual == expected
 
 
-@pytest.mark.skip('pending code')
+# @pytest.mark.skip('pending code')
 def test_soap_wrong_input_type():
     bad_input = 'not a dataframe or series'
     with pytest.raises(Exception) as excinfo:
-        soap(bad_input, ['NaN'])
-    actual = excinfo.value
-    expected = 'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got str'
+        Soap(bad_input, ['NaN']).clean_copy
+    actual = str(excinfo.value)
+    expected = str(TypeError('TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got <class \'str\'>'))
     assert actual == expected
 
 
