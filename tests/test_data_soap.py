@@ -8,9 +8,15 @@ from datasoap.data_soap import Soap
 def test_version():
     assert __version__ == '0.1.0'
 
+# ================= Fixtures =================
 
 @pytest.fixture
 def sample_dataframe():
+    """[creates a smaller dataframe from a dataset downloaded @: [Kaggle.com](https://www.kaggle.com/ltx1171135686/googleplaystore-acsv)]
+
+    Returns:
+        [<class pd.DataFrame]: [a smaller copy of dataframe created with pandas.read_csv]
+    """
     df = pd.read_csv('assets/googleplaystore.csv')
     df = pd.DataFrame(df.copy().drop(['Category', 'Rating', 'Type', 'Content Rating',
                                       'Genres', 'Last Updated', 'Current Ver', 'Android Ver'], axis=1)).iloc[200:240]
@@ -18,25 +24,40 @@ def sample_dataframe():
     return df
 
 
+@pytest.fixture 
+def soap_sample(sample_dataframe):
+    """[creates a sample instance of the Soap class using the sample_dataframe fixture]
+
+    Args:
+        sample_dataframe ([pd.DataFrame]): [sample dataframe to be cleaned]
+
+    Returns:
+        [<class Soap]: [returns an instance of Soap class where the clean data is stored in attr `clean_copy`]
+    """
+
+    return Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
+
+
+
+# ================== End Fixtures ================
+
+# ======== Testing of Private and Static Methods =====
+
 # @pytest.mark.skip('pending code')
-
-
 def test_pull_comma_when_trail_char():
     actual = Soap.pull_comma('1,000,000+')
     expected = '1000000+'
     assert actual == expected
 
+
 # @pytest.mark.skip('pending code')
-
-
 def test_pull_comma_when_lead_char():
     actual = Soap.pull_comma('$1,000,000')
     expected = '$1000000'
     assert actual == expected
 
+
 # @pytest.mark.skip('pending code')
-
-
 def test_pull_comma_when_no_comma():
     actual = Soap.pull_comma('$1000000')
     expected = '$1000000'
@@ -56,17 +77,15 @@ def test_pull_leading_character():
     expected = '4.99'
     assert actual == expected
 
+
 # @pytest.mark.skip('pending code')
-
-
 def test_pull_trailing_character_m():
     actual = Soap.pull_trailing_character('1m')
     expected = 1.0
     assert actual == expected
 
+
 # @pytest.mark.skip('pending code')
-
-
 def test_pull_trailing_character_k():
     actual = Soap.pull_trailing_character('1k')
     expected = .001
@@ -103,4 +122,67 @@ def test_soap_wrong_input_type():
 def test_convert_unit():
     actual = Soap.convert_unit('10k', 'M')
     expected = '0.01'
+    assert actual == expected
+
+
+# === End Testing of Private and Static methods ===
+
+# ============== Testing of Class =================
+
+# @pytest.mark.skip('pending code')
+def test_class_instance_clean_copy_type(soap_sample):
+    actual = isinstance(soap_sample.clean_copy, pd.DataFrame)
+    expected = True
+    assert actual == expected
+
+
+# @pytest.mark.skip('pending code')
+def test_class_instance_str(soap_sample):
+    actual = soap_sample.__str__()
+    expected = 'Instance of Soap class. attr `clean_copy` is a pandas dataframe object with values converted into operable datatypes.'
+    assert actual == expected
+
+
+# @pytest.mark.skip('pending code')
+def test_class_instance_repr(soap_sample):
+    actual = soap_sample.__repr__()
+    expected = 'Instance of <class \'pandas.core.frame.DataFrame\'> with values in columns: [\'Reviews\', \'Installs\', \'Price\', \'Size\'], re-formated into operable datatype; \'float64\' or \'int64\''
+    assert actual == expected
+
+
+# @pytest.mark.skip('pending code')
+def test_class_instance_show_diff(soap_sample, capsys):
+    soap_sample.show_diff()
+    cap = capsys.readouterr()
+    actual = cap.out
+    expected =  (
+        'Original DataFrame.info: \n' 
+        '\n' 
+        "<class 'pandas.core.frame.DataFrame'>\n"
+        'RangeIndex: 40 entries, 200 to 239\n' 
+        'Data columns (total 5 columns):\n' 
+        ' #   Column    Non-Null Count  Dtype \n' 
+        '---  ------    --------------  ----- \n' 
+        ' 0   App       40 non-null     object\n' 
+        ' 1   Reviews   40 non-null     object\n' 
+        ' 2   Size      40 non-null     object\n' 
+        ' 3   Installs  40 non-null     object\n' 
+        ' 4   Price     40 non-null     object\n' 
+        'dtypes: object(5)\n' 
+        'memory usage: 1.7+ KB\n' 
+        '\n' 
+        ' Re-Formatted DataFrame.info: \n' 
+        '\n'
+        "<class 'pandas.core.frame.DataFrame'>\n" 
+        'RangeIndex: 40 entries, 200 to 239\n' 
+        'Data columns (total 5 columns):\n' 
+        ' #   Column    Non-Null Count  Dtype  \n' 
+        '---  ------    --------------  -----  \n' 
+        ' 0   App       40 non-null     object \n' 
+        ' 1   Reviews   40 non-null     int64  \n' 
+        ' 2   Size      24 non-null     float64\n' 
+        ' 3   Installs  40 non-null     int64  \n' 
+        ' 4   Price     40 non-null     float64\n' 
+        'dtypes: float64(2), int64(2), object(1)\n' 
+        'memory usage: 1.7+ KB\n')
     assert actual == expected
