@@ -13,11 +13,22 @@ class Soap:
     def __str__(self):
         return f'Instance of Soap class. attr `clean_copy` is a pandas dataframe object with values converted into operable datatypes.'
 
+    def __repr__(self):
+        return f'Instance of {type(self.clean_copy)}'
 
 
     def soap(self, data, dirty:list):
+        """[Method used by the Soap class to reformat values in a pandas.dataframe instance to allow correct conversion to correct datatype.]
 
-        """Pulls trailing and leading character
+        Args:
+            data ([pandas.DataFrame]): [pandas dataframe instance]
+            dirty (list): [list of column names as strings that need reformatting for conversion to operable data types]
+
+        Raises:
+            TypeError: [data argument must be a pandas.DataFrame Object]
+
+        Returns:
+            [pandas.DataFrame]: [returns copy of the origial dataframe with the specified values converted to the correct dtype]
         """
         if not isinstance(data, pd.DataFrame):
             raise TypeError(f'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got {type(data)}')
@@ -25,13 +36,9 @@ class Soap:
         clean_data = data.copy()
         for col in dirty:
             clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(self.pull_trailing_character(self.pull_leading_character(self.pull_comma(val))), errors='coerce') for val in clean_data[f'{col}']], inplace=True)
-        # run pd.DataFrame.replace for all indicated columns on the copy of the df input.
-            # applies all formatter functions defined below to the 
-            # columns replacing the values with the return of those funcitons
-                # Takes form: ` df['column to be formatted'].replace(df[column to be formatted].values, [pd.to_numeric(callback_1(callback_2(val))) for val in df['collumn to be formatted']], inplace=True)` 
-        # return a copy of input of the values properly converted
+        
         return clean_data
-        # pass
+     
 
     @staticmethod
     def show_diff(self):
@@ -51,11 +58,13 @@ class Soap:
     # define methods for pulling commas out of a String
     @staticmethod
     def pull_comma(line: str)-> str:
-        """For use on integer||float values represented by strings containing "," characters.
-        Does not alter the notation or denomination of the value. ie: "1,000" will not become
-        "1k" 
-        input <-- str
-        output --> str
+        """[static method used by Soap class instances to pull commas out of numeric strings]
+
+        Args:
+            line (str): [string to be re-formatted e.g. '2,000']
+
+        Returns:
+            str: [numeric string e.g. (see Args) --> '2000']
         """
         if ',' in line:
             line = line.split(',')
@@ -67,22 +76,22 @@ class Soap:
 
     # define methods for pulling leading characters
     @staticmethod
-    def pull_trailing_character(line):
-        """For use on integer||float values represented by strings denoting denomination with the use
-        of an alpha-char such as "23k" Does not perform conversion to parts of another denomination.
-        ie: "23k" does not become ".023" if you wanted parts of milions. transformation is literal.
-        thus "23k" becomes "23000" also works for strings denoting '%' if '%' denoted at end of string
+    def pull_trailing_character(line:str)-> str:
+        """[Static method used by Soap class instance to Identify trailing characters and convert values in thousands to values as fractions of a million. also pulls non-alphanumeric trailing characters]
 
-        input<-- str
-        output--> str
+        Args:
+            line ([str]): [String to be re-formatted, e.g. '10k' or '1000+' etc]
+
+        Returns:
+            [str]: [numeric string converted to correct unit. e.g. (see Args)--> '.01' or '1000']
         """
         # print(line[0:len(line)-1])
         if line[-1].lower() == 'k':
             return (int(float(line[0:len(line)-1])*1000) / 1000000)
         elif line[-1].lower() == 'm':
             return (int(float(line[0:len(line)-1])*1000000) / 1000000)
-        elif line[-1].isalpha == False:
-            return (line[0:len(line)-1]) or 'NaN'
+        elif line[-1].isalpha() == False:
+            return line if line[-1].isdigit() else (line[0:len(line)-1]) 
         else:
             return line
         
@@ -97,9 +106,14 @@ class Soap:
 
     # define methods for pulling trailing characters
     @staticmethod
-    def pull_leading_character(line):
-        """For use on numeric strings that begin with a currency or denom char.
+    def pull_leading_character(line:str)-> str:
+        """[Static method used by Soap class instance to remove leading non-numeric characters from numeric strings]
 
+        Args:
+            line ([str]): [numeric string with leading character, e.g. '$4.99. method assumes no whitespace between char and digit]
+
+        Returns:
+            [str]: [re-formatted numeric string with no leading characters]
         """
         return line[0:] if line[0].isdigit() else line[1:len(line)]
         # current solution assumes trailing char only == 'm || M' or 'k || K' and converts 'k || K' to a decimal of 1Million. 
@@ -110,7 +124,16 @@ class Soap:
 
     # identify highest denomination and convert all figures to fraction of that denomination
     @staticmethod
-    def convert_unit(line, unit_target):
+    def convert_unit(line:str, unit_target:str)-> str:
+        """[Static method used by Soap class instances to identify units of measure and convert to fractions of specified whole unit. e.g. '10k' to '.01'million]
+
+        Args:
+            line ([str]): [numeric string with a trailing unit of measure character]
+            unit_target ([str]): [The preferred unit of measure for numeric strings to be converted to e.g. 'M' or 'k']
+
+        Returns:
+            [str]: [reformated numeric string as fraction of specified unit_target or numeric string with no trailing non-numeric characters]
+        """
         # step 1: identify the suffix line -1
         for i in units.keys():
             print(f'i in convert_unit{i} \n units.keys{units.keys()}')
