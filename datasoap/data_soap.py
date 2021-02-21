@@ -1,7 +1,6 @@
-import pandas as pd 
-import numpy as np 
-import re   
-from unit_data.conversion import units
+import pandas as pd
+import numpy as np
+import re
 
 
 class Soap:
@@ -9,7 +8,7 @@ class Soap:
         self.data = data
         self.dirty = dirty
         self.clean_copy = self.soap(self.data, self.dirty)
-    
+
     def __str__(self):
         return f'Instance of Soap class. attr `clean_copy` is a pandas dataframe object with values converted into operable datatypes.'
 
@@ -31,7 +30,8 @@ class Soap:
             [pandas.DataFrame]: [returns copy of the origial dataframe with the specified values converted to the correct dtype]
         """
         if not isinstance(data, pd.DataFrame):
-            raise TypeError(f'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got {type(data)}')
+            raise TypeError(
+                f'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got {type(data)}')
         # create copy of the dataframe to be cleaned
         clean_data = data.copy()
         for col in dirty:
@@ -45,15 +45,15 @@ class Soap:
         """Shows both the original and cleaned dataframes.
         """
 
-        # in order to accomplish this we may need to wrap all the logic in a class with a property for before and after 
+        # in order to accomplish this we may need to wrap all the logic in a class with a property for before and after
         # otherwise we may have some issues with being able to retrieve a specific comparison assuming a user needs to clean
-        # more than one dataset. 
+        # more than one dataset.
 
         # show the `.info()` for the original and the cleaned copy
         # show the `.describe` for the original and the cleaned copy
         # accomplised by returning an iterable of print statements for each.
         # e.g. return [(print(f'{origin_info}'), print(f'{cleaned_info}')), (print(f'{origin_describe}'), print(f'{cleaned_describe}'))]
-        # pass 
+        # pass
 
     # define methods for pulling commas out of a String
     @staticmethod
@@ -72,9 +72,9 @@ class Soap:
             return line
         else:
             return line
-                
 
     # define methods for pulling leading characters
+
     @staticmethod
     def pull_trailing_character(line:str)-> str:
         """[Static method used by Soap class instance to Identify trailing characters and convert values in thousands to values as fractions of a million. also pulls non-alphanumeric trailing characters]
@@ -95,8 +95,10 @@ class Soap:
         else:
             return line
 
+        
 
     # define methods for pulling trailing characters
+
     @staticmethod
     def pull_leading_character(line:str)-> str:
         """[Static method used by Soap class instance to remove leading non-numeric characters from numeric strings]
@@ -108,13 +110,12 @@ class Soap:
             [str]: [re-formatted numeric string with no leading characters]
         """
         return line[0:] if line[0].isdigit() else line[1:len(line)]
-        # current solution assumes trailing char only == 'm || M' or 'k || K' and converts 'k || K' to a decimal of 1Million. 
+        # current solution assumes trailing char only == 'm || M' or 'k || K' and converts 'k || K' to a decimal of 1Million.
         # mvp: keep assumption and note it in Docs. stretch: account for all unit conversion types.
         # current solution takes form ` if str[-1] == 'k': convert to str[:-1]//100^10 else return str[:-1]`
-        
-
 
     # identify highest denomination and convert all figures to fraction of that denomination
+
     @staticmethod
     def convert_unit(line:str, unit_target:str)-> str:
         """[Static method used by Soap class instances to identify units of measure and convert to fractions of specified whole unit. e.g. '10k' to '.01'million]
@@ -126,17 +127,31 @@ class Soap:
         Returns:
             [str]: [reformated numeric string as fraction of specified unit_target or numeric string with no trailing non-numeric characters]
         """
+    def convert_unit(line, unit_target):
+
+        units = {
+            'T': 10**12,
+            'G': 10**9,
+            'M': 10**6,
+            'k': 10**3,
+            'h': 10**2,
+            'da': 10**1,
+            'base': 1,
+            'd': 10**-1,
+            'c': 10**-2,
+            'm': 10**-3,
+            'µ': 10**-6,
+            'n': 10**-9,
+            'p': 10**-12
+        }
+
         # step 1: identify the suffix line -1
         for i in units.keys():
             print(f'i in convert_unit{i} \n units.keys{units.keys()}')
             if i in str(line):
-                line = int(float(line[0: line.index(i)]))*units[i] /units[unit_target]
+                line = int(float(line[0: line.index(i)])) * \
+                    units[i] / units[unit_target]
             else:
                 pass
         return str(line)
-        # no current logic written for this, previously was handled as part of  pull_trailing logic. 
-     
-
-
-
-
+        # no current logic written for this, previously was handled as part of  pull_trailing logic.
