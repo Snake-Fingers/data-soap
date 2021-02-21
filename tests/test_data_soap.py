@@ -1,8 +1,9 @@
-from data_soap import __version__
+from datasoap import __version__
 import pytest
 import pandas as pd
 # from data_soap.data_soap import soap, pull_comma, pull_leading_character, pull_trailing_character, convert_unit
-from data_soap.data_soap import Soap
+from datasoap.data_soap import Soap
+
 
 def test_version():
     assert __version__ == '0.1.0'
@@ -21,18 +22,24 @@ def sample_dataframe():
 #     print(df.info)
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_comma_when_trail_char():
     actual = Soap.pull_comma('1,000,000+')
     expected = '1000000+'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_comma_when_lead_char():
     actual = Soap.pull_comma('$1,000,000')
     expected = '$1000000'
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_comma_when_no_comma():
     actual = Soap.pull_comma('$1000000')
     expected = '$1000000'
@@ -53,12 +60,16 @@ def test_pull_leading_character():
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_trailing_character_m():
     actual = Soap.pull_trailing_character('1m')
     expected = 1.0
     assert actual == expected
 
 # @pytest.mark.skip('pending code')
+
+
 def test_pull_trailing_character_k():
     actual = Soap.pull_trailing_character('1k')
     expected = .001
@@ -96,4 +107,3 @@ def test_convert_unit():
     actual = Soap.convert_unit('10k', 'M')
     expected = '0.01'
     assert actual == expected
-

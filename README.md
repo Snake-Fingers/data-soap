@@ -1,17 +1,17 @@
-# data-soap
+# datasoap
 
 ## What is it?
 
-A CLI menu that allows users to request overall daily rating for group of websites, with other options for individual site readouts.
+datasoap is a supplementary library for pandas that processes dataframes derived from CSV files. The module checks cell data for correct numerical formatting and converts mismatched data to the correct data type (ex. str > float64).
 
 ## Main Features
 
 - Strips unnecessary characters from numerical data fields in pandas dataframes to ensure consistent data formatting
 - Provides before and after representations of dataframes to allow for comparison
 
-## Where to get it
+## Repository
 
-Source code is hosted on: [github.com/snake-fingers/data-soap](https://github.com/Snake-Fingers/data-soap)
+Source code is hosted on: [github.com/snake-fingers/data-soap](https://github.com/Snake-Fingers/datasoap)
 
 ## Dependencies
 
@@ -19,16 +19,9 @@ pandas - Python package that provides fast, flexible, and expressive data struct
 
 ## Installation
 
-[Binary Files](https://pypi.org/project/data-soap/#files)
-
-To install data-soap from poetry, in a virtual environment:
 ```
-poetry add data-soap
+poetry add datasoap
 ```
-
-## License
-
-MIT License
 
 ## Documentation
 
@@ -36,8 +29,4 @@ Documentation to come.
 
 ## Background
 
-Data-Soap originated from a Code Fellows 401 Python midterm project. The project team includes Alex Angelico, Grace Choi, Robert Carter, Mason Fryberger, and Jae Choi. After working with a few painful datasets using, we wanted to create a library that allows users to more efficiently manipulate clean datasets extracted from CSVs that may have inconsistent formatting.
-
-## Getting Help
-
-email: mason.fryberger@gmail.com
+datasoap originated from a Code Fellows 401 Python midterm project. The project team includes Alex Angelico, Grace Choi, Robert Carter, Mason Fryberger, and Jae Choi. After working with a few painful datasets using, we wanted to create a library that allows users to more efficiently manipulate clean datasets extracted from CSVs that may have inconsistent formatting.
