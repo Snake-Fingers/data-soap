@@ -4,7 +4,19 @@ import re
 
 
 class Soap:
+    """[Instances of this class are used to reformat the values in a pandas dataframe column in such a way as to be operable with standard mathematics and plotting. Removing non-digit characters from numeric strings.]
+    """
     def __init__(self, data, dirty):
+        """[Creates class instance that creates a copy of the original dataframe [Arg: data] and stores a re-formatted copy in the attribute [clean_copy]]
+
+        Args:
+            data ([pandas.core.frame.DataFrame]): [any valid pandas dataframe object]
+            dirty ([list]): [list of column names that need to be reformatted.]
+        
+        Other Attributes:
+            clean_copy ([pandas.core.frame.DataFrame]): [copy of the original dataframe with the values reformatted. value of self.clean_copy may be operated on with any valid pandas method]
+
+        """
         self.data = data
         self.dirty = dirty
         self.clean_copy = self.soap(self.data, self.dirty)
