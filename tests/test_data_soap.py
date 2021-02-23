@@ -125,6 +125,38 @@ def test_convert_unit():
     assert actual == expected
 
 
+# below test are for convert_unit method
+# @pytest.mark.skip('pending code')
+def test_one_unit_above_base():
+    actual = Soap.convert_unit('10k', 'M')
+    expected = '0.01'
+    assert actual == expected
+
+# @pytest.mark.skip('pending code')
+def test_multi_unit_above_base():
+    actual = Soap.convert_unit('10da', 'M')
+    expected = '0.0001'
+    assert actual == expected
+
+# @pytest.mark.skip('pending code')
+def test_one_unit_below_base():
+    actual = Soap.convert_unit('10c', 'd')
+    expected = '1.0'
+    assert actual == expected
+
+
+# @pytest.mark.skip('pending code')
+def test_multi_unit_below_base():
+    actual = Soap.convert_unit('10m', 'd')
+    expected = '0.09999999999999999'
+    assert actual == expected
+
+# @pytest.mark.skip('pending code')
+def test_non_alpha_trailing_character():
+    actual = Soap.convert_unit('100+', 'M')
+    expected = '100'
+    assert actual == expected
+
 # === End Testing of Private and Static methods ===
 
 # ============== Testing of Class =================

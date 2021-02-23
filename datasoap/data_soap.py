@@ -119,7 +119,7 @@ class Soap:
 
     @staticmethod
     def convert_unit(line:str, unit_target:str)-> str:
-        """[Static method used by Soap class instances to identify units of measure and convert to fractions of specified whole unit. e.g. '10k' to '.01'million]
+        """[Static method used by Soap class instances to identify units of measure and convert to a decimal of specified unit of measure. e.g. '10k' to '.01'million: NOTE: conversion of units less than 1 to another unit less than 1 may yield values to precision rather than expected whole. e.g. '10m' to 'deci unit' yields 0.09999999999999999 rather than the expected 0.1]
 
         Args:
             line ([str]): [numeric string with a trailing unit of measure character]
@@ -144,13 +144,20 @@ class Soap:
             'p': 10**-12
         }
 
-        # step 1: identify the suffix line -1
+        # step 1: identify the suffix line -1 
         for i in units.keys():
             print(f'i in convert_unit{i} \n units.keys{units.keys()}')
             if i in str(line):
                 line = int(float(line[0: line.index(i)])) * \
                     units[i] / units[unit_target]
+                return str(line)
             else:
+                
                 pass
-        return str(line)
+        
+        if line[-1].isdigit() is False:
+         
+            return line[0: len(line)-1] 
+
+       
         
