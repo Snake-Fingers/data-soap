@@ -35,7 +35,7 @@ def soap_sample(sample_dataframe):
         [<class Soap]: [returns an instance of Soap class where the clean data is stored in attr `clean_copy`]
     """
 
-    return Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
+    return Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'], 'M')
 
 
 
@@ -94,7 +94,7 @@ def test_pull_trailing_character_k():
 
 # @pytest.mark.skip('pending code')
 def test_soap_one_column_clean(sample_dataframe):
-    rinsed = Soap(sample_dataframe, ['Size']).clean_copy
+    rinsed = Soap(sample_dataframe, ['Size'], 'M').clean_copy
     actual = rinsed['Size'].iloc[9]
     expected = .023
     assert actual == expected
@@ -102,7 +102,7 @@ def test_soap_one_column_clean(sample_dataframe):
 
 # @pytest.mark.skip('pending code')
 def test_soap_more_columns(sample_dataframe):
-    rinsed = Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
+    rinsed = Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'], 'M')
     actual = rinsed.clean_copy.dtypes.all()
     expected = 'float64'
     assert actual == expected
@@ -112,7 +112,7 @@ def test_soap_more_columns(sample_dataframe):
 def test_soap_wrong_input_type():
     bad_input = 'not a dataframe or series'
     with pytest.raises(Exception) as excinfo:
-        Soap(bad_input, ['NaN']).clean_copy
+        Soap(bad_input, ['NaN'], 'M').clean_copy
     actual = str(excinfo.value)
     expected = str(TypeError('TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got <class \'str\'>'))
     assert actual == expected
@@ -230,7 +230,7 @@ def test_class_instance_show_diff(soap_sample, capsys):
         ' 1   Reviews   40 non-null     int64  \n' 
         ' 2   Size      24 non-null     float64\n' 
         ' 3   Installs  40 non-null     int64  \n' 
-        ' 4   Price     40 non-null     float64\n' 
+        ' 4   Price     38 non-null     float64\n' 
         'dtypes: float64(2), int64(2), object(1)\n' 
         'memory usage: 1.7+ KB\n')
     assert actual == expected
