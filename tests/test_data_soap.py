@@ -157,6 +157,22 @@ def test_non_alpha_trailing_character():
     expected = '100'
     assert actual == expected
 
+
+# @pytest.mark.skip('pending code')
+def test_non_numeric_input_nan():
+    actual = Soap.convert_unit('varies with device', 'T')
+    expected = 'varies with device'
+    assert actual == expected
+
+
+# @pytest.mark.skip('pending code')
+def test_non_numeric_input_type():
+    actual = type(Soap.convert_unit('varies with device', 'T'))
+    expected = str
+    assert actual == expected
+
+
+
 # === End Testing of Private and Static methods ===
 
 # ============== Testing of Class =================
