@@ -14,7 +14,7 @@ Returns:
 class Soap:
     """[Reformat values in a Pandas.DataFrame created with a CSV file. The reformatted dataframe is a copy of the original and the comparison can be seen using the show_diff() method on any Instance of this class.]
     """
-    def __init__(self, data, dirty):
+    def __init__(self, data, dirty:list, common_unit:str):
         """[Creates class instance that creates a copy of the original dataframe [Arg: data] and stores a re-formatted copy in the attribute [clean_copy]]
 
         Args:
@@ -28,6 +28,8 @@ class Soap:
         self.data = data
         self.dirty = dirty
         self.clean_copy = self.soap(self.data, self.dirty)
+        self.common_unit = common_unit
+
 
     def __str__(self):
         return f'Instance of Soap class. attr `clean_copy` is a pandas dataframe object with values converted into operable datatypes.'
@@ -55,7 +57,7 @@ class Soap:
         
         clean_data = data.copy()
         for col in dirty:
-            clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(self.pull_trailing_character(self.pull_leading_character(self.pull_comma(val))), errors='coerce') for val in clean_data[f'{col}']], inplace=True)
+            clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(self.convert_units(self.pull_leading_character(self.pull_comma(val)), self.common_unit), errors='coerce') for val in clean_data[f'{col}']], inplace=True)
         
         return clean_data
      
@@ -125,16 +127,16 @@ class Soap:
         return line[0:] if line[0].isdigit() else line[1:len(line)]
 
 
-    @staticmethod
-    def convert_unit(line:str, unit_target:str)-> str:
+    # @staticmethod
+    def convert_unit(self, line:str, common_unit:str)-> str:
         """[Static method used by Soap class instances to identify units of measure and convert to a decimal of specified unit of measure. e.g. '10k' to '.01'million: NOTE: conversion of units less than 1 to another unit less than 1 may yield values to precision rather than expected whole. e.g. '10m' to 'deci unit' yields 0.09999999999999999 rather than the expected 0.1]
 
         Args:
             line ([str]): [numeric string with a trailing unit of measure character]
-            unit_target ([str]): [The preferred unit of measure for numeric strings to be converted to e.g. 'M' or 'k']
+            common_unit ([str]): [The preferred unit of measure for numeric strings to be converted to e.g. 'M' or 'k']
 
         Returns:
-            [str]: [reformated numeric string as fraction of specified unit_target or numeric string with no trailing non-numeric characters]
+            [str]: [reformated numeric string as fraction of specified common_unit or numeric string with no trailing non-numeric characters]
         """
         units = {
             'T': 10**12,
@@ -160,7 +162,7 @@ class Soap:
             print(f'i in convert_unit{i} \n units.keys{units.keys()}')
             if i in str(line):
                 line = int(float(line[0: line.index(i)])) * \
-                    units[i] / units[unit_target]
+                    units[i] / units[self.common_unit]
                 return str(line)
             else:
                 
