@@ -5,17 +5,18 @@ datasoap
 *****
 What is it? 
 *****
+
 **datasoap** is a Python package that provides the ability to reformat values of a **pandas** dataframe column in such a way as to be operable with standard mathematics and plotting. It is designed to work with **pandas** data in a way that maximizes efficiency and decreases frustrations caused by mismatched numerical data types. By using **datasoap**, users can remove non-digit characters from numeric strings, convert specific unit measurements, and see a comparison of the original data and the cleaned up version of the data.
 
 **datasoap** works well with any **pandas** dataframe objects, which include the 2 primary data structures: Series (1-dimensional) and Dataframe (2-dimensional). As a dependency of **datasoap**, **pandas** is also integrated with **NumPy**. 
 
 Things **datasoap** can do:  
-*   Reformat values in a *pandas* dataframe instance to allow correct conversion to the correct datatype  
-*   Show a comparison of the original and re-formatted dataframes  
-*   Pull commas out of numeric strings (1,000 -> 1000)  
-*   Pull non-alphanumeric trailing characters (1000+ -> 1000)  
-*   Pull leading non-numeric characters ($4.99 -> 4.99)  
-*   Convert all unit values to a specified common unit. E.g. ‘10k’ becomes ‘.01’ where ‘M’ is the common unit.   
+| *   Reformat values in a *pandas* dataframe instance to allow correct conversion to the correct datatype  
+| *   Show a comparison of the original and re-formatted dataframes  
+| *   Pull commas out of numeric strings (1,000 -> 1000)  
+| *   Pull non-alphanumeric trailing characters (1000+ -> 1000)  
+| *   Pull leading non-numeric characters ($4.99 -> 4.99)  
+| *   Convert all unit values to a specified common unit. E.g. ‘10k’ becomes ‘.01’ where ‘M’ is the common unit.   
 
 These methods were the focus of the package, as data analysis gets frustratingly complicated when numerical values cannot be manipulated due to mismatched datatypes or formatting. Working with data usually involves a lot of cleaning up before getting to use it, and *datasoap* aims to alleviate some of the biggest pain points of data analysis.
 
@@ -43,20 +44,24 @@ pandas - Python package that provides fast, flexible, and expressive data struct
 *****
 Attributes & Methods
 *****
-`clean_copy`: re-formatted version of the pandas dataframe.  
-`show_diff()`: calls pd.DataFrame.info method on both the original and the re-formatted dataframes for easy comparison of the data type transformation.  
+
+| `clean_copy`: re-formatted version of the pandas dataframe.  
+| `show_diff()`: calls pd.DataFrame.info method on both the original and the re-formatted dataframes for easy comparison of the data type transformation.  
 
 For pandas methods and attributes, please visit: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html
 
 *****
 Installation
 *****
+
 `poetry add datasoap`  
 
 *****
 Basic Functionality
 *****
-::
+
+.. code-block:: python
+
     from datasoap.data_soap import Soap
     import pandas as pd
 
@@ -67,6 +72,7 @@ Basic Functionality
 *****
 Example Usage:
 *****
+
 .. code-block:: python
 
     In [1]: from datasoap.data_soap import Soap  
