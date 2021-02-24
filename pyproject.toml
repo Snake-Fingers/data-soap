@@ -12,7 +12,7 @@ authors = [
 license = "MIT"
 readme = "README.md"
 
-homepage = "https://github.com/Snake-Fingers/datasoap"
+documentation = "https://datasoap.readthedocs.io/en/latest/"
 repository = "https://github.com/Snake-Fingers/datasoap"
 
 classifiers = [
