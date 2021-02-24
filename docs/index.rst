@@ -67,7 +67,8 @@ Basic Functionality
 *****
 Example Usage:
 *****
-.. code-block:: Python
+.. code-block:: python
+
     In [1]: from datasoap.data_soap import Soap  
     In [2]: import pandas as pd  
 
