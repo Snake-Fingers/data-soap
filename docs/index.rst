@@ -10,13 +10,13 @@ What is it?
 
 **datasoap** works well with any **pandas** dataframe objects, which include the 2 primary data structures: Series (1-dimensional) and Dataframe (2-dimensional). As a dependency of **datasoap**, **pandas** is also integrated with **NumPy**. 
 
-Things **datasoap** can do:  
-| *   Reformat values in a *pandas* dataframe instance to allow correct conversion to the correct datatype  
-| *   Show a comparison of the original and re-formatted dataframes  
-| *   Pull commas out of numeric strings (1,000 -> 1000)  
-| *   Pull non-alphanumeric trailing characters (1000+ -> 1000)  
-| *   Pull leading non-numeric characters ($4.99 -> 4.99)  
-| *   Convert all unit values to a specified common unit. E.g. ‘10k’ becomes ‘.01’ where ‘M’ is the common unit.   
+Things **datasoap** can do:   
+| Reformat values in a *pandas* dataframe instance to allow correct conversion to the correct datatype  
+| Show a comparison of the original and re-formatted dataframes  
+| Pull commas out of numeric strings (1,000 -> 1000)  
+| Pull non-alphanumeric trailing characters (1000+ -> 1000)  
+| Pull leading non-numeric characters ($4.99 -> 4.99)  
+| Convert all unit values to a specified common unit. E.g. ‘10k’ becomes ‘.01’ where ‘M’ is the common unit.   
 
 These methods were the focus of the package, as data analysis gets frustratingly complicated when numerical values cannot be manipulated due to mismatched datatypes or formatting. Working with data usually involves a lot of cleaning up before getting to use it, and *datasoap* aims to alleviate some of the biggest pain points of data analysis.
 
