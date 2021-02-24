@@ -10,6 +10,7 @@ def test_version():
 
 # ================= Fixtures =================
 
+
 @pytest.fixture
 def sample_dataframe():
     """[creates a smaller dataframe from a dataset downloaded @: [Kaggle.com](https://www.kaggle.com/ltx1171135686/googleplaystore-acsv)]
@@ -24,7 +25,7 @@ def sample_dataframe():
     return df
 
 
-@pytest.fixture 
+@pytest.fixture
 def soap_sample(sample_dataframe):
     """[creates a sample instance of the Soap class using the sample_dataframe fixture]
 
@@ -36,7 +37,6 @@ def soap_sample(sample_dataframe):
     """
 
     return Soap(sample_dataframe, ['Reviews', 'Installs', 'Price', 'Size'])
-
 
 
 # ================== End Fixtures ================
@@ -114,7 +114,8 @@ def test_soap_wrong_input_type():
     with pytest.raises(Exception) as excinfo:
         Soap(bad_input, ['NaN']).clean_copy
     actual = str(excinfo.value)
-    expected = str(TypeError('TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got <class \'str\'>'))
+    expected = str(TypeError(
+        'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got <class \'str\'>'))
     assert actual == expected
 
 
@@ -155,34 +156,34 @@ def test_class_instance_show_diff(soap_sample, capsys):
     soap_sample.show_diff()
     cap = capsys.readouterr()
     actual = cap.out
-    expected =  (
-        'Original DataFrame.info: \n' 
-        '\n' 
-        "<class 'pandas.core.frame.DataFrame'>\n"
-        'RangeIndex: 40 entries, 200 to 239\n' 
-        'Data columns (total 5 columns):\n' 
-        ' #   Column    Non-Null Count  Dtype \n' 
-        '---  ------    --------------  ----- \n' 
-        ' 0   App       40 non-null     object\n' 
-        ' 1   Reviews   40 non-null     object\n' 
-        ' 2   Size      40 non-null     object\n' 
-        ' 3   Installs  40 non-null     object\n' 
-        ' 4   Price     40 non-null     object\n' 
-        'dtypes: object(5)\n' 
-        'memory usage: 1.7+ KB\n' 
-        '\n' 
-        ' Re-Formatted DataFrame.info: \n' 
+    expected = (
+        'Original DataFrame.info: \n'
         '\n'
-        "<class 'pandas.core.frame.DataFrame'>\n" 
-        'RangeIndex: 40 entries, 200 to 239\n' 
-        'Data columns (total 5 columns):\n' 
-        ' #   Column    Non-Null Count  Dtype  \n' 
-        '---  ------    --------------  -----  \n' 
-        ' 0   App       40 non-null     object \n' 
-        ' 1   Reviews   40 non-null     int64  \n' 
-        ' 2   Size      24 non-null     float64\n' 
-        ' 3   Installs  40 non-null     int64  \n' 
-        ' 4   Price     40 non-null     float64\n' 
-        'dtypes: float64(2), int64(2), object(1)\n' 
+        "<class 'pandas.core.frame.DataFrame'>\n"
+        'RangeIndex: 40 entries, 200 to 239\n'
+        'Data columns (total 5 columns):\n'
+        ' #   Column    Non-Null Count  Dtype \n'
+        '---  ------    --------------  ----- \n'
+        ' 0   App       40 non-null     object\n'
+        ' 1   Reviews   40 non-null     object\n'
+        ' 2   Size      40 non-null     object\n'
+        ' 3   Installs  40 non-null     object\n'
+        ' 4   Price     40 non-null     object\n'
+        'dtypes: object(5)\n'
+        'memory usage: 1.7+ KB\n'
+        '\n'
+        ' Re-Formatted DataFrame.info: \n'
+        '\n'
+        "<class 'pandas.core.frame.DataFrame'>\n"
+        'RangeIndex: 40 entries, 200 to 239\n'
+        'Data columns (total 5 columns):\n'
+        ' #   Column    Non-Null Count  Dtype  \n'
+        '---  ------    --------------  -----  \n'
+        ' 0   App       40 non-null     object \n'
+        ' 1   Reviews   40 non-null     int64  \n'
+        ' 2   Size      24 non-null     float64\n'
+        ' 3   Installs  40 non-null     int64  \n'
+        ' 4   Price     40 non-null     float64\n'
+        'dtypes: float64(2), int64(2), object(1)\n'
         'memory usage: 1.7+ KB\n')
     assert actual == expected
