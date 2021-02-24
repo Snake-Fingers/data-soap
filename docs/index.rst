@@ -11,8 +11,7 @@ What is it?
 **datasoap** works well with any **pandas** dataframe objects, which include the 2 primary data structures: Series (1-dimensional) and Dataframe (2-dimensional). As a dependency of **datasoap**, **pandas** is also integrated with **NumPy**. 
 
 Things **datasoap** can do:   
-
-| Reformat values in a *pandas* dataframe instance to allow correct conversion to the correct datatype.  
+*   Reformat values in a *pandas* dataframe instance to allow correct conversion to the correct datatype.  
 | Show a comparison of the original and re-formatted dataframes.
 | Pull commas out of numeric strings (1,000 -> 1000).
 | Pull non-alphanumeric trailing characters (1000+ -> 1000). 
