@@ -34,4 +34,4 @@ datasoap originated from a Code Fellows 401 Python midterm project. The project 
 ## Future Features in Planning
 - Additional functionality that re-names columns with the common unit of measure.
 - Automation of identifying columns that require reformatting, removing the need for user input on instantiation
-- 
+- Extend useablity to work with other virtual environments such as pip, and conda
