@@ -49,4 +49,12 @@ _____
 _____
 
 ## Change Log
-02-13-2021 4:35pm - Completed Project Prep 1-4 and updated ReadMe  
+02-13-2021 4:35pm - Completed Project Prep 1-4 and updated ReadMe.  
+02-15-2021 10:00pm - Completed basic Packaging, Readme (Project and Package), initial testing for functionality.  
+02-16-2021 9:30pm - Finished dependency injection, tested package installation with dependencies, still working on functionality code, initial testing completed along with method completions.  
+02-17-2021 9:30pm - Finished MVP methods, working on stretch goal methods for broader unit conversions, still testing main methods.  
+02-18.2021 9:30pm - Finished all initial testing and got them to pass. Finished packaging updates.   
+Blocker: module not found (installation works but module is not getting imported)  
+02-20-2021 6pm - Coverage passing at 90-100%. Finished `convert_all` stretch goal. All current tests are passing. Repackaged module after setting up as Poetry project (toml changes instead of using setup.py).   
+Blocker: unit conversion module not found (local module imported into source file)  
+02-22-2021 9:30pm - Added more tests for class and tests are passing (coverage over 80%). Added more tests for stretch goal methods and all are currently passing. Started on documentation on readthedocs.org. Need to add more documentation for methods before updating again on readthedocs.org.  
