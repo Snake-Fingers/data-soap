@@ -47,6 +47,7 @@ _____
 ## Domain Model
 ![Domain Model](assets/data-soap-domain-model.png) 
 _____
+
 ## Change Log
 02-13-2021 4:35pm - Completed Project Prep 1-4 and updated ReadMe.  
 02-15-2021 10:00pm - Completed basic Packaging, Readme (Project and Package), initial testing for functionality.  
