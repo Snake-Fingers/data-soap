@@ -19,7 +19,7 @@ class Soap:
 
         Args:
             data ([pandas.core.frame.DataFrame]): [any valid pandas dataframe object]
-            dirty ([list]): [list of column names that need to be reformatted.]
+            dirty ([list]): [list of column names that need to be reformatted. Must be list of strings]
         
         Other Attributes:
             clean_copy ([pandas.core.frame.DataFrame]): [copy of the original dataframe with the values reformatted. value of self.clean_copy may be operated on with any valid pandas method see [pandas docs](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html?highlight=info)]
@@ -54,9 +54,15 @@ class Soap:
         if not isinstance(data, pd.DataFrame):
             raise TypeError(
                 f'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got {type(data)}')
-        
+
+        if not isinstance(dirty, list):
+            raise TypeError(f'TypeError: expected <class \'list\'>, got {type(dirty)}')
+
+
         clean_data = data.copy()
+        
         for col in dirty:
+            
             clean_data[f'{col}'].replace(clean_data[f'{col}'].values, [pd.to_numeric(self.convert_unit(self.pull_leading_character(self.pull_comma(val)), self.common_unit), errors='coerce') for val in clean_data[f'{col}']], inplace=True)
         
         return clean_data
@@ -68,7 +74,7 @@ class Soap:
         """
         print('Original DataFrame.info: \n')
         self.data.info()
-        print('\n Re-Formatted DataFrame.info: \n') 
+        print('\nRe-Formatted DataFrame.info: ') 
         self.clean_copy.info() 
 
 
