@@ -107,17 +107,7 @@ def test_soap_more_columns(sample_dataframe):
     expected = 'float64'
     assert actual == expected
 
-
-# @pytest.mark.skip('pending code')
-def test_soap_wrong_input_type():
-    bad_input = 'not a dataframe or series'
-    with pytest.raises(Exception) as excinfo:
-        Soap(bad_input, ['NaN'], 'M').clean_copy
-    actual = str(excinfo.value)
-    expected = str(TypeError(
-        'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got <class \'str\'>'))
-    assert actual == expected
-
+# below test are for convert_unit method
 
 # @pytest.mark.skip('pending code')
 def test_convert_unit():
@@ -125,8 +115,6 @@ def test_convert_unit():
     expected = '0.01'
     assert actual == expected
 
-
-# below test are for convert_unit method
 # @pytest.mark.skip('pending code')
 def test_one_unit_above_base():
     actual = Soap.convert_unit('10k', 'M')
@@ -172,7 +160,11 @@ def test_non_numeric_input_type():
     expected = str
     assert actual == expected
 
-
+# @pytest.mark.skip('pending code')
+def test_convert_unit_all_digit():
+    actual = Soap.convert_unit('1000', 'da')
+    expected = '1000'
+    assert actual == expected
 
 # === End Testing of Private and Static methods ===
 
@@ -220,6 +212,8 @@ def test_class_instance_show_diff(soap_sample, capsys):
         'dtypes: object(5)\n'
         'memory usage: 1.7+ KB\n'
         '\n'
+        'Re-Formatted DataFrame.info: \n'
+
         "<class 'pandas.core.frame.DataFrame'>\n" 
         'RangeIndex: 40 entries, 200 to 239\n' 
         'Data columns (total 5 columns):\n' 
@@ -232,4 +226,28 @@ def test_class_instance_show_diff(soap_sample, capsys):
         ' 4   Price     38 non-null     float64\n' 
         'dtypes: float64(2), int64(2), object(1)\n' 
         'memory usage: 1.7+ KB\n')
+    assert actual == expected
+
+
+# ============= End Class Testing ====================
+
+# ========== Testing Inputs of Public Methods ========
+
+# @pytest.mark.skip('pending code')
+def test_soap_wrong_input_data():
+    bad_input = 'not a dataframe or series'
+    with pytest.raises(Exception) as excinfo:
+        Soap(bad_input, ['NaN'], 'M').clean_copy
+    actual = str(excinfo.value)
+    expected = str(TypeError(
+        'TypeError: expected pd.DataFrame object, pd.Series object, or list-like: got <class \'str\'>'))
+    assert actual == expected
+
+# @pytest.mark.skip('pending code')
+def test_soap_wrong_input_dirty(sample_dataframe):
+    bad_input = 'not a list'
+    with pytest.raises(Exception) as excinfo:
+        Soap(sample_dataframe, bad_input, 'base').dirty 
+    actual = str(excinfo.value)
+    expected = str(TypeError('TypeError: expected <class \'list\'>, got <class \'str\'>'))
     assert actual == expected
